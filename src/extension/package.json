@@ -1,7 +1,7 @@
 {
   "name": "openclaw-tracing",
   "version": "0.2.0",
-  "description": "OpenClaw Plugin for advanced tracing with fine-grained hooks",
+  "description": "OpenClaw Extension for advanced tracing with fine-grained hooks",
   "type": "module",
   "main": "index.js",
   "exports": {

@@ -1,8 +1,8 @@
-.PHONY: start build dev test clean web web-build plugin plugin-sync plugin-watch
+.PHONY: start build dev test clean web web-build ext ext-sync ext-watch
 
-# 插件目录配置
-PLUGIN_SRC_DIR = dist/plugin
-PLUGIN_INSTALL_DIR = $(HOME)/.openclaw/extensions/openclaw-tracing
+# Extension 目录配置
+EXT_SRC_DIR = dist/extension
+EXT_INSTALL_DIR = $(HOME)/.openclaw/extensions/openclaw-tracing
 
 export TRACING_DEBUG ?= 1
 
@@ -28,39 +28,39 @@ clean:
 	@echo "清理构建产物..."
 	rm -rf dist
 
-# ==================== 插件开发命令 ====================
+# ==================== Extension 开发命令 ====================
 
-# 仅构建插件（不含 server/cli）
-plugin:
-	@echo "构建插件..."
-	npm run build:plugin
-	@echo "✓ 插件构建完成: $(PLUGIN_SRC_DIR)"
+# 仅构建 Extension（不含 server/cli）
+ext:
+	@echo "构建 Extension..."
+	npm run build:extension
+	@echo "✓ Extension 构建完成: $(EXT_SRC_DIR)"
 
-# 同步插件到 openclaw 安装目录（不重新构建）
-plugin-sync:
-	@echo "同步插件到 $(PLUGIN_INSTALL_DIR)..."
-	@mkdir -p $(PLUGIN_INSTALL_DIR)
-	@cp -r $(PLUGIN_SRC_DIR)/* $(PLUGIN_INSTALL_DIR)/
-	@echo "✓ 插件已同步到 $(PLUGIN_INSTALL_DIR)"
+# 同步 Extension 到 openclaw 安装目录（不重新构建）
+ext-sync:
+	@echo "同步 Extension 到 $(EXT_INSTALL_DIR)..."
+	@mkdir -p $(EXT_INSTALL_DIR)
+	@cp -r $(EXT_SRC_DIR)/* $(EXT_INSTALL_DIR)/
+	@echo "✓ Extension 已同步到 $(EXT_INSTALL_DIR)"
 	@echo ""
 	@echo "已复制文件:"
-	@ls -la $(PLUGIN_INSTALL_DIR)/*.js 2>/dev/null | awk '{print "  " $$NF}'
+	@ls -la $(EXT_INSTALL_DIR)/*.js 2>/dev/null | awk '{print "  " $$NF}'
 
-# 构建并同步插件（开发快捷命令）
-p: plugin plugin-sync
+# 构建并同步 Extension（开发快捷命令）
+e: ext ext-sync
 	@echo ""
-	@echo "✓ 插件开发流程完成！"
-	@echo "  提示: 重新启动 openclaw 会话以加载新插件"
+	@echo "✓ Extension 开发流程完成！"
+	@echo "  提示: 重新启动 openclaw 会话以加载新 Extension"
 
-# 监听插件源文件变化并自动同步
-plugin-watch:
-	@echo "监听插件源文件变化..."
+# 监听 Extension 源文件变化并自动同步
+ext-watch:
+	@echo "监听 Extension 源文件变化..."
 	@echo "按 Ctrl+C 停止"
 	@while true; do \
-		fswatch -1 src/plugin/*.ts src/types/*.ts && \
+		fswatch -1 src/extension/*.ts src/types/*.ts && \
 		echo "" && \
 		echo "检测到文件变化，重新构建..." && \
-		$(MAKE) p; \
+		$(MAKE) e; \
 	done
 
 # ==================== Web UI 命令 ====================
@@ -85,14 +85,14 @@ help:
 	@echo "    make test         - 运行测试"
 	@echo "    make clean        - 清理构建产物"
 	@echo ""
-	@echo "  插件开发:"
-	@echo "    make p            - 【推荐】构建插件并同步到 openclaw"
-	@echo "    make plugin       - 仅构建插件"
-	@echo "    make plugin-sync  - 仅同步插件（不重新构建）"
-	@echo "    make plugin-watch - 监听变化自动构建同步（需要 fswatch）"
+	@echo "  Extension 开发:"
+	@echo "    make e            - 【推荐】构建 Extension 并同步到 openclaw"
+	@echo "    make ext          - 仅构建 Extension"
+	@echo "    make ext-sync     - 仅同步 Extension（不重新构建）"
+	@echo "    make ext-watch    - 监听变化自动构建同步（需要 fswatch）"
 	@echo ""
 	@echo "  Web UI:"
 	@echo "    make web          - 启动 Web UI 开发服务器"
 	@echo "    make web-build    - 构建 Web UI"
 	@echo ""
-	@echo "  插件安装目录: $(PLUGIN_INSTALL_DIR)"
+	@echo "  Extension 安装目录: $(EXT_INSTALL_DIR)"

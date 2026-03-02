@@ -2,8 +2,8 @@
   "id": "openclaw-tracing",
   "name": "OpenClaw Tracing Collector",
   "version": "0.2.0",
-  "description": "Advanced tracing with Plugin Hooks for fine-grained monitoring",
-  "type": "plugin",
+  "description": "Advanced tracing with Extension Hooks for fine-grained monitoring",
+  "type": "extension",
   "entry": "./index.js",
   "configSchema": {
     "type": "object",

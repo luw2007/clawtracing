@@ -98,20 +98,24 @@ function resolveChannelId(
   return normalizeChannelId(raw);
 }
 
-const tracingPlugin: OpenClawPlugin = {
+const tracingExtension: OpenClawPlugin = {
   id: "openclaw-tracing",
   name: "OpenClaw Tracing Collector",
   version: "0.2.0",
-  description: "Advanced tracing with Plugin Hooks for fine-grained monitoring",
+  description: "Advanced tracing with Extension Hooks for fine-grained monitoring",
   
   activate(api: OpenClawPluginApi) {
-    const pluginConfig = api.pluginConfig || {};
+    const rawPluginConfig = api.pluginConfig ?? {};
+    const pluginConfig =
+      typeof rawPluginConfig.config === "object" && rawPluginConfig.config
+        ? (rawPluginConfig.config as Record<string, unknown>)
+        : rawPluginConfig;
     const config: TracingConfig = {
-      serverUrl: (pluginConfig.serverUrl as string) || "http://localhost:3456",
-      debug: (pluginConfig.debug as boolean) || false,
+      serverUrl: (pluginConfig.serverUrl as string) ?? "http://localhost:3456",
+      debug: (pluginConfig.debug as boolean) ?? false,
       enabledHooks: pluginConfig.enabledHooks as string[] | undefined,
-      batchSize: (pluginConfig.batchSize as number) || 10,
-      batchInterval: (pluginConfig.batchInterval as number) || 1000,
+      batchSize: (pluginConfig.batchSize as number) ?? 10,
+      batchInterval: (pluginConfig.batchInterval as number) ?? 1000,
       sampling: pluginConfig.sampling as Record<string, number> | undefined,
       performance: pluginConfig.performance as {
         maxBufferSize?: number;
@@ -119,6 +123,7 @@ const tracingPlugin: OpenClawPlugin = {
         autoDowngrade?: boolean;
         statsInterval?: number;
       } | undefined,
+      instanceName: pluginConfig.instanceName as string | undefined,
     };
     
     const collector = new TracingCollector(api, config);
@@ -730,8 +735,8 @@ const tracingPlugin: OpenClawPlugin = {
       });
     }
 
-    api.logger.info(`OpenClaw Tracing plugin activated (server: ${config.serverUrl})`);
+    api.logger.info(`OpenClaw Tracing extension activated (server: ${config.serverUrl})`);
   },
 };
 
-export default tracingPlugin;
+export default tracingExtension;

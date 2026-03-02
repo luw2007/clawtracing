@@ -1,15 +1,15 @@
 #!/bin/bash
-# OpenClaw Tracing Plugin - 完整安装脚本
+# OpenClaw Tracing Extension - 完整安装脚本
 # 包含所有测试中发现的修复
 
 set -e
 
-echo "🦞 OpenClaw Tracing Plugin - 完整安装脚本"
+echo "🦞 OpenClaw Tracing Extension - 完整安装脚本"
 echo "============================================"
 echo ""
 
-# 步骤 1: 编译插件
-echo "📦 步骤 1: 编译插件..."
+# 步骤 1: 编译扩展
+echo "📦 步骤 1: 编译扩展..."
 npm run build
 echo "   ✅ 编译完成"
 echo ""
@@ -32,18 +32,18 @@ else
 fi
 echo ""
 
-# 步骤 4: 安装插件
-echo "📥 步骤 4: 安装插件到 OpenClaw..."
-openclaw plugins install ~/ai/openclaw-tracing/dist/plugin/
-echo "   ✅ 插件安装完成"
+# 步骤 4: 安装扩展
+echo "📥 步骤 4: 安装扩展到 OpenClaw..."
+openclaw extensions install ~/ai/openclaw-tracing/dist/extension/
+echo "   ✅ 扩展安装完成"
 echo ""
 
 # 步骤 5: 验证安装
-echo "🔍 步骤 5: 验证插件安装..."
-if openclaw plugins list | grep -q "openclaw-tracing"; then
-    echo "   ✅ 插件已成功安装到 OpenClaw"
+echo "🔍 步骤 5: 验证扩展安装..."
+if openclaw extensions list | grep -q "openclaw-tracing"; then
+    echo "   ✅ 扩展已成功安装到 OpenClaw"
 else
-    echo "   ⚠️  插件可能未正确安装"
+    echo "   ⚠️  扩展可能未正确安装"
 fi
 echo ""
 
@@ -68,7 +68,7 @@ echo "✅ 安装完成！"
 echo ""
 echo "📝 下一步操作："
 echo "1. 配置 OpenClaw（编辑 ~/.openclaw/openclaw.json）："
-echo "   添加到 plugins.entries:"
+echo "   添加到 extensions:"
 echo '   "openclaw-tracing": {'
 echo '     "enabled": true'
 echo '   }'
@@ -76,7 +76,7 @@ echo ""
 echo "2. 重启 OpenClaw Gateway:"
 echo "   openclaw gateway restart"
 echo ""
-echo "3. 查看插件日志:"
+echo "3. 查看扩展日志:"
 echo "   tail -f ~/.openclaw/logs/gateway.log | grep tracing"
 echo ""
 echo "4. 查看 Tracing Server 日志:"

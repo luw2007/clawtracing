@@ -1,16 +1,16 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "dist/plugin",
-    "rootDir": "src/plugin",
+    "outDir": "dist/extension",
+    "rootDir": "src/extension",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true
   },
   "files": [
-    "src/plugin/index.ts",
-    "src/plugin/collector.ts",
-    "src/plugin/types.ts"
+    "src/extension/index.ts",
+    "src/extension/collector.ts",
+    "src/extension/types.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

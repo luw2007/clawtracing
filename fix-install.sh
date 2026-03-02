@@ -1,9 +1,9 @@
 #!/bin/bash
-# OpenClaw Tracing Plugin - 安装修复脚本
+# OpenClaw Tracing Extension - 安装修复脚本
 
 set -e
 
-echo "🔧 OpenClaw Tracing Plugin 安装修复脚本"
+echo "🔧 OpenClaw Tracing Extension 安装修复脚本"
 echo "=========================================="
 echo ""
 
@@ -18,21 +18,21 @@ else
 fi
 echo ""
 
-# 步骤 2: 重新编译插件
-echo "🔨 步骤 2: 重新编译插件..."
+# 步骤 2: 重新编译扩展
+echo "🔨 步骤 2: 重新编译扩展..."
 npm run build
 echo "   ✅ 编译完成"
 echo ""
 
-# 步骤 3: 安装插件
-echo "📦 步骤 3: 安装插件..."
-openclaw plugins install ~/ai/openclaw-tracing/dist/plugin/
+# 步骤 3: 安装扩展
+echo "📦 步骤 3: 安装扩展..."
+openclaw extensions install ~/ai/openclaw-tracing/dist/extension/
 echo "   ✅ 安装完成"
 echo ""
 
 # 步骤 4: 验证安装
 echo "🔍 步骤 4: 验证安装..."
-openclaw plugins list | grep openclaw-tracing
+openclaw extensions list | grep openclaw-tracing
 echo ""
 
 echo "=========================================="
@@ -41,4 +41,4 @@ echo ""
 echo "下一步："
 echo "1. 启动 Tracing Server: npm start"
 echo "2. 重启 OpenClaw Gateway: openclaw gateway restart"
-echo "3. 查看插件日志: tail -f ~/.openclaw/logs/gateway.log"
+echo "3. 查看扩展日志: tail -f ~/.openclaw/logs/gateway.log"

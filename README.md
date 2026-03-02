@@ -98,19 +98,23 @@ npx openclaw-tracing clear [options]
 
 ## 配置说明
 
-### 在 OpenClaw 中启用 Plugin
+### 在 OpenClaw 中启用 Extension
 
 ```json
 {
-  "plugins": {
+  "extensions": {
     "openclaw-tracing": {
       "enabled": true,
-      "serverUrl": "http://localhost:3456",
-      "debug": false
+      "config": {
+        "serverUrl": "http://localhost:3456",
+        "debug": false
+      }
     }
   }
 }
 ```
+
+扩展文件默认放在 OpenClaw 扩展目录：`~/.openclaw/extensions/openclaw-tracing/`。
 
 ### 端口配置
 
@@ -164,6 +168,12 @@ chmod 755 ~/.openclaw/tracing
 1. 确认服务已启动: `curl http://localhost:3456/health`
 2. 检查防火墙设置是否阻止 WebSocket 连接
 3. 确认浏览器支持 WebSocket
+
+### 心跳/事件发送失败
+
+1. 确认 Tracing Server 已启动: `npx openclaw-tracing start`
+2. 确认 OpenClaw 配置使用了 `config` 包裹层（见上方配置示例）
+3. 若当前环境不需要采集，直接将插件 `enabled` 设为 `false`
 
 ## 开发
 
