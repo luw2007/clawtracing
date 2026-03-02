@@ -1,0 +1,40 @@
+{
+  "id": "openclaw-tracing",
+  "name": "OpenClaw Tracing Collector",
+  "version": "0.2.0",
+  "description": "Advanced tracing with Plugin Hooks for fine-grained monitoring",
+  "type": "plugin",
+  "entry": "./index.js",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "serverUrl": {
+        "type": "string",
+        "default": "http://localhost:3456",
+        "description": "Tracing Server URL"
+      },
+      "debug": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable debug mode for full data logging"
+      },
+      "batchSize": {
+        "type": "number",
+        "default": 10,
+        "description": "Number of events to buffer before sending"
+      },
+      "batchInterval": {
+        "type": "number",
+        "default": 1000,
+        "description": "Maximum time (ms) to wait before sending buffered events"
+      },
+      "enabledHooks": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "List of hooks to enable"
+      }
+    }
+  }
+}

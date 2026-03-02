@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist/plugin",
+    "rootDir": "src/plugin",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true
+  },
+  "files": [
+    "src/plugin/index.ts",
+    "src/plugin/collector.ts",
+    "src/plugin/types.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

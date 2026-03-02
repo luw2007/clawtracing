@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+web/node_modules/
+
+# Build outputs
+dist/
+web/dist/
+
+# TypeScript build artifacts in source directory
+/src/**/*.js
+/src/**/*.js.map
+/src/**/*.d.ts
+/src/**/*.d.ts.map
+
+# Lock files (keep package-lock.json for npm)
+pnpm-lock.yaml
+
+# Debug and internal files
+.dbg/
+.trae/
+debug.md
+
+# npm pack outputs
+*.tgz
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Log files
+*.log
+npm-debug.log*
+
+# Environment files
+.env
+.env.*
+
+# SQLite database (runtime data)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# Test coverage
+coverage/
+
+# Runtime data
+tracing-data/

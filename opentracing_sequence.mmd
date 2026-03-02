@@ -1,0 +1,50 @@
+sequenceDiagram
+    participant Client as Client Application
+    participant TracerA as Tracer (Client)
+    participant Carrier as Carrier (Network)
+    participant TracerB as Tracer (Server)
+    participant Server as Server Application
+
+    Note over Client, TracerA: 1. Start Span
+    Client->>TracerA: StartSpan("Operation A")
+    activate TracerA
+    TracerA-->>Client: return SpanA
+    deactivate TracerA
+
+    Note over Client: 2. Business Logic & Tagging
+    Client->>Client: SpanA.SetTag("key", "value")
+    Client->>Client: SpanA.Log("event")
+
+    Note over Client, TracerA: 3. Inject Context
+    Client->>TracerA: Inject(SpanA.Context, FORMAT, carrier)
+    activate TracerA
+    TracerA-->>Carrier: Populate carrier with context
+    deactivate TracerA
+
+    Note over Client, Server: 4. RPC Call
+    Client->>Server: HTTP Request (with carrier)
+    activate Server
+
+    Note over Server, TracerB: 5. Extract Context
+    Server->>TracerB: Extract(FORMAT, carrier)
+    activate TracerB
+    TracerB-->>Server: return SpanContextB
+    deactivate TracerB
+
+    Note over Server, TracerB: 6. Start Child Span
+    Server->>TracerB: StartSpan("Operation B", ChildOf(SpanContextB))
+    activate TracerB
+    TracerB-->>Server: return SpanB
+    deactivate TracerB
+
+    Note over Server: 7. Server Logic
+    Server->>Server: SpanB.SetTag("status", "ok")
+
+    Note over Server, TracerB: 8. Finish Span B
+    Server->>TracerB: SpanB.Finish()
+    
+    Server-->>Client: HTTP Response
+    deactivate Server
+
+    Note over Client, TracerA: 9. Finish Span A
+    Client->>TracerA: SpanA.Finish()
