@@ -61,7 +61,6 @@ npx openclaw-tracing start [options]
 
 选项:
   -p, --port <port>     HTTP API 端口 (默认: 3456)
-  -w, --web-port <port> Web 界面端口 (默认: 3457)
   -q, --quiet           静默模式
 ```
 
@@ -120,8 +119,7 @@ npx openclaw-tracing clear [options]
 
 | 端口 | 用途 |
 |------|------|
-| 3456 | HTTP API / WebSocket |
-| 3457 | Web Dashboard (预留) |
+| 3456 | HTTP API / WebSocket / Web Dashboard |
 
 ### 数据存储路径
 

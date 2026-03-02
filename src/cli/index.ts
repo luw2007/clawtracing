@@ -192,11 +192,9 @@ program
   .command("start")
   .description("启动 tracing 服务器")
   .option("-p, --port <port>", "HTTP API 端口", "3456")
-  .option("-w, --web-port <port>", "Web 界面端口（预留）", "3457")
   .option("-q, --quiet", "静默模式，减少输出")
   .action(async (options) => {
     const port = parseInt(options.port, 10);
-    const webPort = parseInt(options.webPort, 10);
 
     if (!options.quiet) {
       console.log("🚀 正在启动 OpenClaw Tracing 服务器...");
@@ -214,7 +212,7 @@ program
         console.log(`   HTTP API:    http://localhost:${port}/api`);
         console.log(`   WebSocket:   ws://localhost:${port}`);
         console.log(`   Health:      http://localhost:${port}/health`);
-        console.log(`   Web UI:      http://localhost:${webPort} (即将支持)`);
+        console.log(`   Web UI:      http://localhost:${port}`);
         console.log("");
         console.log("💡 提示: 使用 Ctrl+C 停止服务器");
       }

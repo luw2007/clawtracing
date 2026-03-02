@@ -9,7 +9,8 @@
   "scripts": {
     "clean": "rm -rf dist && find src -name '*.js' -o -name '*.js.map' -o -name '*.d.ts' -o -name '*.d.ts.map' | xargs rm -f 2>/dev/null || true",
     "prebuild": "npm run clean",
-    "build": "tsc && npm run build:extension",
+    "build": "tsc && npm run build:extension && npm run build:web && cp -r web/dist dist/web && chmod +x dist/cli/index.js",
+    "build:web": "cd web && npm install && npm run build",
     "build:extension": "tsc --pretty false --module NodeNext --moduleResolution NodeNext --target ES2022 --declaration --declarationMap --sourceMap --outDir dist/extension --rootDir src/extension src/extension/index.ts src/extension/collector.ts src/extension/types.ts && cp src/extension/package.json dist/extension/ && cp src/extension/README.md dist/extension/ && cp src/extension/openclaw.extension.json dist/extension/",
     "dev": "tsc --watch",
     "start": "node dist/server/index.js",
