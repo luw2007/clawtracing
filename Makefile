@@ -1,4 +1,4 @@
-.PHONY: start build dev test clean web web-build ext ext-sync ext-watch
+.PHONY: start build dev test clean web web-build ext ext-sync ext-watch install uninstall
 
 # Extension 目录配置
 EXT_SRC_DIR = dist/extension
@@ -7,6 +7,26 @@ EXT_INSTALL_DIR = $(HOME)/.openclaw/extensions/openclaw-tracing
 export TRACING_DEBUG ?= 1
 
 # ==================== 主要命令 ====================
+
+# 安装 Extension 到 OpenClaw（构建后安装）
+install: build
+	@echo "安装 openclaw-tracing Extension..."
+	@mkdir -p $(EXT_INSTALL_DIR)
+	@cp -r $(EXT_SRC_DIR)/* $(EXT_INSTALL_DIR)/
+	@echo ""
+	@echo "✓ Extension 安装完成！"
+	@echo "  安装目录: $(EXT_INSTALL_DIR)"
+	@echo ""
+	@echo "下一步:"
+	@echo "  1. 启动 Tracing Server: make start 或 npx openclaw-tracing start"
+	@echo "  2. 重启 OpenClaw 会话以加载 Extension"
+	@echo "  3. 访问 Dashboard: http://localhost:3456"
+
+# 卸载 Extension
+uninstall:
+	@echo "卸载 openclaw-tracing Extension..."
+	@rm -rf $(EXT_INSTALL_DIR)
+	@echo "✓ Extension 已卸载"
 
 start: build
 	@echo "启动 openclaw-tracing 服务..."
@@ -78,6 +98,10 @@ web-build:
 help:
 	@echo "openclaw-tracing Makefile 命令:"
 	@echo ""
+	@echo "  安装/卸载:"
+	@echo "    make install      - 【推荐】构建并安装 Extension 到 OpenClaw"
+	@echo "    make uninstall    - 卸载 Extension"
+	@echo ""
 	@echo "  主要命令:"
 	@echo "    make build        - 构建整个项目"
 	@echo "    make start        - 构建并启动服务"
@@ -86,7 +110,7 @@ help:
 	@echo "    make clean        - 清理构建产物"
 	@echo ""
 	@echo "  Extension 开发:"
-	@echo "    make e            - 【推荐】构建 Extension 并同步到 openclaw"
+	@echo "    make e            - 构建 Extension 并同步到 openclaw"
 	@echo "    make ext          - 仅构建 Extension"
 	@echo "    make ext-sync     - 仅同步 Extension（不重新构建）"
 	@echo "    make ext-watch    - 监听变化自动构建同步（需要 fswatch）"

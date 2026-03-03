@@ -30,27 +30,47 @@
 
 ## 快速开始
 
-### 安装依赖
+### 1. 安装依赖
 
 ```bash
 npm install
 ```
 
-### 构建项目
+### 2. 安装 Extension
 
 ```bash
-npm run build
+# 推荐方式：使用 make 命令安装
+make install
+
+# 或者使用 npm script
+npm run ext:install
 ```
 
-### 启动服务
+安装完成后，Extension 将被复制到 `~/.openclaw/extensions/openclaw-tracing/` 目录。
+
+### 3. 启动 Tracing Server
 
 ```bash
+# 使用 make（会自动构建）
+make start
+
+# 或者使用 npx
 npx openclaw-tracing start
 ```
 
-### 访问 Dashboard
+### 4. 访问 Dashboard
 
 打开浏览器访问: http://localhost:3456
+
+### 5. 重启 OpenClaw
+
+重启 OpenClaw 会话以加载新安装的 Extension。Extension 会自动连接 Tracing Server 并开始收集数据。
+
+### 卸载
+
+```bash
+make uninstall
+```
 
 ## CLI 命令参考
 
